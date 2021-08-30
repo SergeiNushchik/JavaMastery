@@ -1,17 +1,20 @@
 package com.mastery.java.task.rest;
 
-import com.mastery.java.task.dao.EmployeeDao;
+
 import com.mastery.java.task.dto.Employee;
 import com.mastery.java.task.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.security.spec.ECField;
 import java.util.List;
 
-@RestController
+@Controller
+@ResponseBody
+
 public class EmployeeController  {
 
     private final EmployeeService employeeService;
@@ -21,23 +24,22 @@ public class EmployeeController  {
         this.employeeService = employeeService;
     }
 
-    @PostMapping(value = "/employees")
-    public ResponseEntity<?> create(@RequestBody Employee employee) {
-        employeeService.create(employee);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+  @PostMapping()
+  public ResponseEntity<?> create(@RequestBody Employee employee) {
+      employeeService.create(employee);
+      return new ResponseEntity<>(HttpStatus.CREATED);
+  }
 
-    @GetMapping(value = "/employees")
+    @GetMapping()
     public ResponseEntity<List<Employee>> read() {
         final List<Employee> employees = employeeService.readAll();
+       return employees != null &&  !employees.isEmpty()
+              ? new ResponseEntity<>(employees, HttpStatus.OK)
+              : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+   }
 
-        return employees != null &&  !employees.isEmpty()
-                ? new ResponseEntity<>(employees, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @GetMapping(value = "/employees/{id}")
-    public ResponseEntity<Employee> read(@PathVariable long id) {
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Employee> read(@PathVariable int id) {
         final Employee employees = employeeService.read(id);
 
         return employees != null
@@ -45,22 +47,18 @@ public class EmployeeController  {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/employees/{id}")
-    public ResponseEntity<?> update(@PathVariable long id, @RequestBody Employee employee) {
-        final boolean updated = employeeService.update(employee, id);
+  @PutMapping(value = "/{id}")
+  public ResponseEntity<?> update(@PathVariable int id, @RequestBody Employee employee) {
+     employeeService.update(employee, id);
 
-        return updated
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-    }
+      return new ResponseEntity<>(HttpStatus.OK);
+  }
 
-    @DeleteMapping(value = "/employees/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id) {
-        final boolean deleted = employeeService.delete(id);
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity<?> delete(@PathVariable int  id) {
+     employeeService.delete(id);
+       return  new ResponseEntity<>(HttpStatus.OK);
 
-        return deleted
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-    }
+   }
 }
 

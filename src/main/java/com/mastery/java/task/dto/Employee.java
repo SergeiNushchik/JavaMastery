@@ -3,16 +3,14 @@ package com.mastery.java.task.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
-@Entity
-@Table(name = "employee")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
+
+
 public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long employeeId;
+
+    private int  employeeId;
 
     private String firstName;
 
@@ -26,7 +24,7 @@ public class Employee {
 
     private Date date_of_birth;
 
-    protected Employee() {
+    public Employee() {
     }
 
     public Employee(String firstName, String lastName,
@@ -40,11 +38,11 @@ public class Employee {
         this.date_of_birth = date_of_birth;
     }
 
-    public Long getEmployeeId() {
+    public Integer getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
+    public void setEmployeeId(int  employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -107,5 +105,9 @@ public class Employee {
                 ", gender=" + gender +
                 ", date_of_birth=" + date_of_birth +
                 '}';
+    }
+
+    public void setGender(String gender) {
+        this.gender = Gender.valueOf(gender);
     }
 }

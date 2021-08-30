@@ -2,51 +2,42 @@ package com.mastery.java.task.service;
 
 import com.mastery.java.task.dao.EmployeeDao;
 import com.mastery.java.task.dto.Employee;
-import com.mastery.java.task.service.api.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class EmployeeService implements IEmployeeService {
+
+    @Service
+    public class EmployeeService {
 
 
-    @Autowired
-    private EmployeeDao employeeDao;
+        @Autowired
+        private EmployeeDao employeeDao;
 
-    @Override
-    public void create(Employee employee) {
-        employeeDao.save(employee);
-    }
 
-    @Override
-    public List<Employee> readAll() {
-        return   employeeDao.findAll();
-    }
-
-    @Override
-    public Employee read(long id) {
-        return employeeDao.getById(id);
-    }
-
-    @Override
-    public boolean update(Employee employee, long id) {
-        if (employeeDao.existsById(id)) {
-            employee.setEmployeeId(id);
+        public void create(Employee employee) {
             employeeDao.save(employee);
-            return true;
         }
 
-        return false;
-    }
 
-    @Override
-    public boolean delete(long id) {
-        if(employeeDao.existsById(id)){
+        public List<Employee> readAll() {
+            return employeeDao.index();
+        }
+
+
+        public Employee read(int id) {
+            return employeeDao.getById(id);
+        }
+
+
+        public void update(Employee employee, int id) {
+            employeeDao.update(id, employee);
+        }
+
+
+        public void delete(int id) {
             employeeDao.deleteById(id);
-            return true;
         }
-        return false;
+
     }
-}
