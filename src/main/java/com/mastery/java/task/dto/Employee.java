@@ -6,11 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.sql.Date;
 
 
-
-
 public class Employee {
 
-    private int  employeeId;
+    private int employeeId;
 
     private String firstName;
 
@@ -42,7 +40,7 @@ public class Employee {
         return employeeId;
     }
 
-    public void setEmployeeId(int  employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 

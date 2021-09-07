@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @ResponseBody
 
-public class EmployeeController  {
+public class EmployeeController {
 
     private final EmployeeService employeeService;
 
@@ -24,19 +24,19 @@ public class EmployeeController  {
         this.employeeService = employeeService;
     }
 
-  @PostMapping()
-  public ResponseEntity<?> create(@RequestBody Employee employee) {
-      employeeService.create(employee);
-      return new ResponseEntity<>(HttpStatus.CREATED);
-  }
+    @PostMapping()
+    public ResponseEntity<?> create(@RequestBody Employee employee) {
+        employeeService.create(employee);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
     @GetMapping()
     public ResponseEntity<List<Employee>> read() {
         final List<Employee> employees = employeeService.readAll();
-       return employees != null &&  !employees.isEmpty()
-              ? new ResponseEntity<>(employees, HttpStatus.OK)
-              : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-   }
+        return employees != null && !employees.isEmpty()
+                ? new ResponseEntity<>(employees, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Employee> read(@PathVariable int id) {
@@ -47,18 +47,18 @@ public class EmployeeController  {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-  @PutMapping(value = "/{id}")
-  public ResponseEntity<?> update(@PathVariable int id, @RequestBody Employee employee) {
-     employeeService.update(employee, id);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> update(@PathVariable int id, @RequestBody Employee employee) {
+        employeeService.update(employee, id);
 
-      return new ResponseEntity<>(HttpStatus.OK);
-  }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-  @DeleteMapping(value = "/{id}")
-  public ResponseEntity<?> delete(@PathVariable int  id) {
-     employeeService.delete(id);
-       return  new ResponseEntity<>(HttpStatus.OK);
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+        employeeService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
 
-   }
+    }
 }
 
